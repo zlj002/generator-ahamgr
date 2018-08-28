@@ -1,0 +1,1 @@
+export default (appname,name) => () => import(`../${appname}/views/${name}/${name}.vue`)
