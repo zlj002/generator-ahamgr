@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const lodash = require('lodash')
+const glob = require('glob')
 
 module.exports = class extends Generator {
   prompting() {
@@ -69,13 +70,16 @@ module.exports = class extends Generator {
 
   writing() {
     var from = this.templatePath('ahamgr_template')
-    var installDir = this.destinationPath()
+    // var installDir = this.destinationPath()
     var to = this.destinationPath(this.props.projectName)
     // console.log('安装目录' + installDir + '项目目录' + to)
     // var isExists = this.fs.exists(to)
-    var isExists = lodash.includes(installDir, this.props.projectName)
+    var targetDir = glob.sync(`+(${this.props.projectName})`)
+    // console.log('项目目录' + to)
+    // console.log('dirs' + targetDir)
+    // var isExists = lodash.includes(to, targetDir)
     // console.log(isExists)
-    if (isExists) {
+    if (targetDir != '') {
       console.log(`${to} already exist,please check !`)
       // setTimeout(() => {
       process.exit(1);
